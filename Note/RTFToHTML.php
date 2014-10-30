@@ -35,6 +35,15 @@ class JoshRibakoff_Note_RTFToHTML
     /** This is the line separator which we'll replace \par with */
     const LINE_SEPARATOR = '<br />';
 
+    /** This tokens indicate french specific caracters **/
+    const RTF_E_ACUTE_ACCENT_REGEX = '^\\\\\'e9';
+    const RTF_E_CIRCUMFLEX_ACCENT_REGEX = '^\\\\\'ea';
+    const RTF_E_GRAVE_ACCENT_REGEX = '^\\\\\'e8';
+    const RTF_A_CIRCUMFLEX_ACCENT_REGEX = '^\\\\\'e2';
+    const RTF_A_GRAVE_ACCENT_REGEX = '^\\\\\'e0';
+    const RTF_U_GRAVE_ACCENT_REGEX = '^\\\\\'f9';
+    const RTF_CEDILLA_REGEX = '^\\\\\'e7';
+
     /**
      * This is an array of information about the current token, the name of the token, the text that matches the token,
      * and the length of the text that matched the token.
@@ -129,6 +138,33 @@ class JoshRibakoff_Note_RTFToHTML
             case 'T_ESCAPE_BACKSLASH':
                 $this->converted_html .= '\\';
                 break;
+
+            case 'T_E_ACUTE_ACCENT':
+                $this->converted_html .= '&eacute;';
+                break;
+
+            case 'T_E_GRAVE_ACCENT':
+                $this->converted_html .= '&egrave;';
+                break;
+
+            case 'T_E_CIRCUMFLEX_ACCENT':
+                $this->converted_html .= '&ecirc;';
+                break;
+
+            case 'T_A_CIRCUMFLEX_ACCENT':
+                $this->converted_html .= '&acirc;';
+                break;
+
+            case 'T_A_GRAVE_ACCENT':
+                $this->converted_html .= '&agrave;';
+                break;
+
+            case 'T_U_GRAVE_ACCENT': 
+                $this->converted_html .= '&ugrave;';
+                break;
+
+            case 'T_CEDILLA':
+                $this->converted_html .= '&ccedil;';
 
             CASE 'T_ESCAPE_OPENBRACE':
                 $this->converted_html .= '{';
@@ -432,9 +468,17 @@ class JoshRibakoff_Note_RTFToHTML
             'T_COLOR_DEFAULT' => self::RTF_COLOR_DEFAULT,
             'T_COLOR' => self::RTF_COLOR_REGEX,
 
+            'T_U_GRAVE_ACCENT' => self::RTF_U_GRAVE_ACCENT_REGEX,
+            'T_E_CIRCUMFLEX_ACCENT' => self RTF_E_CIRCUMFLEX_ACCENT_REGEX,
+            'T_E_ACUTE_ACCENT' => self::RTF_E_ACUTE_ACCENT_REGEX,
+            'T_E_GRAVE_ACCENT' => self::RTF_E_GRAVE_ACCENT_REGEX, 
+            'T_A_CIRCUMFLEX_ACCENT' => self::RTF_A_CIRCUMFLEX_ACCENT_REGEX,
+            'T_A_GRAVE_ACCENT' => self::RTF_A_GRAVE_ACCENT_REGEX, 
+            'T_CEDILLA' => self::RTF_CEDILLA_REGEX,
+
             'T_TEXT' => '.'
         );
-    }
+    } 
 
     /** Removes unrecognized tokens, if we don't recognize an RTF token we'll just ignore it. */
     function removeRTFTokens($text)
