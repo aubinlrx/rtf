@@ -43,6 +43,7 @@ class JoshRibakoff_Note_RTFToHTML
     const RTF_A_GRAVE_ACCENT_REGEX = '^\\\\\'e0';
     const RTF_U_GRAVE_ACCENT_REGEX = '^\\\\\'f9';
     const RTF_CEDILLA_REGEX = '^\\\\\'e7';
+    const RTF_I_UMLAUT_REGEX = '^\\\\\'ef';
 
     /**
      * This is an array of information about the current token, the name of the token, the text that matches the token,
@@ -165,6 +166,11 @@ class JoshRibakoff_Note_RTFToHTML
 
             case 'T_CEDILLA':
                 $this->converted_html .= '&ccedil;';
+                break;
+
+            case 'T_I_UMLAUT':
+                $this->converted_html .= '&iuml;';
+                break;
 
             CASE 'T_ESCAPE_OPENBRACE':
                 $this->converted_html .= '{';
@@ -469,12 +475,13 @@ class JoshRibakoff_Note_RTFToHTML
             'T_COLOR' => self::RTF_COLOR_REGEX,
 
             'T_U_GRAVE_ACCENT' => self::RTF_U_GRAVE_ACCENT_REGEX,
-            'T_E_CIRCUMFLEX_ACCENT' => self RTF_E_CIRCUMFLEX_ACCENT_REGEX,
+            'T_E_CIRCUMFLEX_ACCENT' => self::RTF_E_CIRCUMFLEX_ACCENT_REGEX,
             'T_E_ACUTE_ACCENT' => self::RTF_E_ACUTE_ACCENT_REGEX,
             'T_E_GRAVE_ACCENT' => self::RTF_E_GRAVE_ACCENT_REGEX, 
             'T_A_CIRCUMFLEX_ACCENT' => self::RTF_A_CIRCUMFLEX_ACCENT_REGEX,
             'T_A_GRAVE_ACCENT' => self::RTF_A_GRAVE_ACCENT_REGEX, 
             'T_CEDILLA' => self::RTF_CEDILLA_REGEX,
+            'T_I_UMLAUT' => self::RTF_I_UMLAUT_REGEX,
 
             'T_TEXT' => '.'
         );
